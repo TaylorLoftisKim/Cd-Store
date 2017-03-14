@@ -6,6 +6,10 @@ public class App {
   public static void main(String[] args) {
     Console myConsole = System.console();
 
+    int tenPercentCoupon = 123;
+    int twentyPercentCoupon = 234;
+    int thirtyPercentCoupon = 345;
+
     Cd radiohead = new Cd("Radiohead", "Hail to the Thief", 2003, 13);
     Cd metalica = new Cd("Metalica", "Enter Sandman", 1991, 10);
 
@@ -17,13 +21,33 @@ public class App {
     boolean programRunning = true;
 
     while(programRunning) {
-      System.out.println("Enter one of the following options:" + "\n" + "All Cds, Add your own CD, Search by Release Date, Search by Price Range, Search by Band, Exit");
+      System.out.println("Enter one of the following options:" + "\n" + "All Cds, Apply Coupon, Add your own CD, Search by Release Date, Search by Price Range, Search by Band, Exit");
 
       String navigationChoice = myConsole.readLine();
 
       if (navigationChoice.equals("All Cds")) {
         for (Cd individualCd : allCds) {
           individualCd.displayProp(individualCd);
+        }
+      } else if (navigationChoice.equals("Apply Coupon")) {
+        System.out.println("Please enter your coupon code.");
+        int myCouponCode = Integer.parseInt(myConsole.readLine());
+
+        if (myCouponCode == tenPercentCoupon) {
+          for (Cd individualCd : allCds) {
+            individualCd.mPrice = (individualCd.mPrice * .9);
+            individualCd.displayProp(individualCd);
+          }
+        } else if (myCouponCode == twentyPercentCoupon) {
+          for (Cd individualCd : allCds) {
+            individualCd.mPrice = (individualCd.mPrice * .8);
+            individualCd.displayProp(individualCd);
+          }
+        } else if (myCouponCode == thirtyPercentCoupon) {
+          for (Cd individualCd : allCds) {
+            individualCd.mPrice = (individualCd.mPrice * .7);
+            individualCd.displayProp(individualCd);
+          }
         }
       } else if (navigationChoice.equals("Add your own CD"))  {
         System.out.println("What is the name of the band?");
@@ -36,7 +60,7 @@ public class App {
         int myReleaseDate = Integer.parseInt(myConsole.readLine());
 
         System.out.println("What price would you like to sell it for?");
-        int myPrice = Integer.parseInt(myConsole.readLine());
+        double myPrice = Double.parseDouble(myConsole.readLine());
 
         Cd userCd = new Cd(myBandName, myAlbumName, myReleaseDate, myPrice);
         allCds.add(userCd);
@@ -57,10 +81,10 @@ public class App {
 
       } else if (navigationChoice.equals("Search by Price Range")) {
         System.out.println("What is your min price?");
-        int minPrice = Integer.parseInt(myConsole.readLine());
+        double minPrice = Double.parseDouble(myConsole.readLine());
 
         System.out.println("What is your max price?");
-        int maxPrice = Integer.parseInt(myConsole.readLine());
+        double maxPrice = Double.parseDouble(myConsole.readLine());
 
         for (Cd individualCd : allCds) {
           if (minPrice <= individualCd.mPrice && individualCd.mPrice <= maxPrice) {
