@@ -17,18 +17,70 @@ public class App {
     boolean programRunning = true;
 
     while(programRunning) {
-      System.out.println("Enter one of the following options:" + "\n" + "All Cds, Search Price, Add Cd, Exit");
+      System.out.println("Enter one of the following options:" + "\n" + "All Cds, Add your own CD, Search by Release Date, Search by Price Range, Search by Band, Exit");
 
-      System navigationChoice = myConsole.readLine();
+      String navigationChoice = myConsole.readLine();
+
       if (navigationChoice.equals("All Cds")) {
-        for ( Cd individualCd : allCds ) {
-          System.out.println("Band: " + individualCd.mBand);
-          System.out.println("Album: " + individualCd.mAlbum);
-          System.out.println("Release Date: " + individualCd.mRDate);
-          System.out.println("Price: " + individualCd.mPrice);
+        for (Cd individualCd : allCds) {
+          individualCd.displayProp(individualCd);
         }
+      } else if (navigationChoice.equals("Add your own CD"))  {
+        System.out.println("What is the name of the band?");
+        String myBandName = myConsole.readLine();
+
+        System.out.println("What is the name of the album?");
+        String myAlbumName = myConsole.readLine();
+
+        System.out.println("What year did the album come out?");
+        int myReleaseDate = Integer.parseInt(myConsole.readLine());
+
+        System.out.println("What price would you like to sell it for?");
+        int myPrice = Integer.parseInt(myConsole.readLine());
+
+        Cd userCd = new Cd(myBandName, myAlbumName, myReleaseDate, myPrice);
+        allCds.add(userCd);
+
+        System.out.println("Here is your new CD!");
+
+        userCd.displayProp(userCd);
+
+      } else if (navigationChoice.equals("Search by Release Date")) {
+        System.out.println("What release date would like to search for?");
+        int searchDate = Integer.parseInt(myConsole.readLine());
+
+        for (Cd individualCd : allCds) {
+          if (individualCd.mRDate == searchDate) {
+            individualCd.displayProp(individualCd);
+          }
+        }
+
+      } else if (navigationChoice.equals("Search by Price Range")) {
+        System.out.println("What is your min price?");
+        int minPrice = Integer.parseInt(myConsole.readLine());
+
+        System.out.println("What is your max price?");
+        int maxPrice = Integer.parseInt(myConsole.readLine());
+
+        for (Cd individualCd : allCds) {
+          if (minPrice <= individualCd.mPrice && individualCd.mPrice <= maxPrice) {
+            individualCd.displayProp(individualCd);
+          }
+        }
+
+      } else if (navigationChoice.equals("Search by Band")) {
+        System.out.println("What band would you like to search for?");
+        String searchBand = myConsole.readLine();
+
+        for (Cd individualCd : allCds) {
+          if (individualCd.mBand.equals(searchBand)) {
+            individualCd.displayProp(individualCd);
+          }
+        }
+
+      } else if (navigationChoice.equals("Exit")) {
+        programRunning = false;
       }
-      // else if (navigationChoice.equals("Searchprice"))
     }
   }
 }
